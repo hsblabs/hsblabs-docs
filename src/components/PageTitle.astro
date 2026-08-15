@@ -21,21 +21,26 @@ const prompt = `次のOSSドキュメントと補足資料を読んでくださ�
 
 このページの内容を私の目的に合わせて具体化したいです。まず、達成したいことと利用環境について質問してから提案してください。`;
 const flatPrompt = `次のOSSドキュメントと補足資料を読み、利用方法と注意点を具体的に説明してください。ページ: ${pageUrl} 補足資料: ${llmsUrl}`;
+const iconBase = `${import.meta.env.BASE_URL}ask-ai/`;
 const links = [
   {
     label: 'ChatGPTに聞く',
+    icon: `${iconBase}chatgpt.svg`,
     href: `https://chatgpt.com/?hints=search&q=${encodeURIComponent(prompt)}`,
   },
   {
     label: 'Geminiに聞く',
+    icon: `${iconBase}gemini.svg`,
     href: `https://www.google.com/search?udm=50&q=${encodeURIComponent(flatPrompt)}`,
   },
   {
     label: 'Claudeに聞く',
+    icon: `${iconBase}claude.svg`,
     href: `https://claude.ai/new?q=${encodeURIComponent(prompt)}`,
   },
   {
     label: 'Perplexityに聞く',
+    icon: `${iconBase}perplexity.svg`,
     href: `https://www.perplexity.ai/search?q=${encodeURIComponent(prompt)}`,
   },
 ] as const;
@@ -45,9 +50,10 @@ const links = [
 
 <nav class="ask-ai-links" aria-label="AIに聞く">
   {
-    links.map(({ label, href }) => (
+    links.map(({ label, icon, href }) => (
       <a href={href} target="_blank" rel="noopener noreferrer">
-        {label}
+        <img src={icon} alt="" width="22" height="22" aria-hidden="true" />
+        <span>{label}</span>
       </a>
     ))
   }
@@ -55,20 +61,59 @@ const links = [
 
 <style>
   .ask-ai-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 1rem;
-    margin-top: 0.75rem;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 12rem));
+    gap: 0.75rem;
+    margin-top: 1rem;
     font-size: var(--sl-text-sm);
   }
 
   .ask-ai-links a {
-    color: var(--sl-color-text-accent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    min-height: 2.75rem;
+    padding: 0.625rem 1rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 999px;
+    background: var(--sl-color-bg-nav);
+    box-shadow: var(--sl-shadow-sm);
+    color: var(--sl-color-text);
+    font-weight: 600;
+    line-height: 1;
     text-decoration: none;
+    transition:
+      border-color 120ms ease,
+      box-shadow 120ms ease,
+      transform 120ms ease;
   }
 
-  .ask-ai-links a:hover,
-  .ask-ai-links a:focus {
-    text-decoration: underline;
+  .ask-ai-links a:hover {
+    border-color: var(--sl-color-gray-3);
+    box-shadow: var(--sl-shadow-md);
+    transform: translateY(-1px);
+  }
+
+  .ask-ai-links a:focus-visible {
+    outline: 2px solid var(--sl-color-text-accent);
+    outline-offset: 2px;
+  }
+
+  .ask-ai-links img {
+    flex: 0 0 auto;
+    object-fit: contain;
+  }
+
+  @media (max-width: 26rem) {
+    .ask-ai-links {
+      grid-template-columns: minmax(0, 12rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ask-ai-links a {
+      transition: none;
+    }
   }
 </style>
