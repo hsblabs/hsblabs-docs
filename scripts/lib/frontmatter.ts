@@ -1,5 +1,3 @@
-import { YAML } from 'bun';
-
 export type ParsedMarkdown = Readonly<{
   data: unknown;
   body: string;
@@ -21,7 +19,7 @@ export function parseMarkdownFrontmatter(source: string): ParsedMarkdown {
   const body = normalized.slice(closing + 5);
 
   return {
-    data: YAML.parse(rawFrontmatter) as unknown,
+    data: Bun.YAML.parse(rawFrontmatter) as unknown,
     body,
   };
 }
@@ -30,5 +28,5 @@ export function stringifyMarkdownFrontmatter(
   data: Readonly<Record<string, unknown>>,
   body: string,
 ): string {
-  return `---\n${YAML.stringify(data).trimEnd()}\n---\n${body}`;
+  return `---\n${JSON.stringify(data, null, 2)}\n---\n${body}`;
 }
