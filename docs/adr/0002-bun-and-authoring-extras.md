@@ -1,6 +1,5 @@
 ---
 date: 2026-08-15
-model: GPT-5.6 Sol
 status: accepted
 ---
 

@@ -361,23 +361,3 @@ for example:
 scrape-kdl/**
 http-command/**
 ```
-
-## CI/CD
-
-`.github/workflows/deploy.yml` runs on:
-
-- pushes to `main`
-- an hourly schedule at minute 17
-- manual dispatch
-
-The workflow uses `oven-sh/setup-bun@v2` with Bun 1.3.14, then runs `bun
-install`, tests, build verification, and `bunx wrangler deploy`.
-
-The workflow expects:
-
-```text
-CLOUDFLARE_API_TOKEN
-CLOUDFLARE_ACCOUNT_ID
-```
-
-as GitHub Actions secrets.

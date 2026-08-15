@@ -1,63 +1,59 @@
-# Repository instructions
+# Repository guidelines
 
-## Source of truth
+## Purpose
 
-- `projects/projects.json` defines publishable OSS repositories.
-- `src/schema/document.ts` defines the versioned hsblabs document profile and
-  the Starlight Content Collection schema.
-- `src/schema/json-schema.ts` owns JSON Schema generation and the public schema
-  endpoint.
+This repository builds the centralized public documentation site for hsblabs
+OSS projects. Each source repository owns its documents under
+`docs/www/**/*.md`; this repository validates, normalizes, and renders them.
+
+## Sources of truth
+
+- `projects/projects.json` defines publishable repositories.
+- `src/schema/document.ts` defines the versioned document profile and the
+  Starlight Content Collection schema.
+- `src/schema/json-schema.ts` owns JSON Schema generation.
 - `src/extras/skill.ts` owns the generated authoring `SKILL` document.
 - `docs/adr/` records architectural decisions.
-- Repository-owned public documentation lives in each source repository under
-  `docs/www/**/*.md`; public local assets live only under `docs/www/assets/**`.
 
 ## Generated files
 
-Do not hand-edit generated project content below `src/content/docs/{project}/`,
-project assets below `public/{project}/assets/`, or files below `public/extras/`.
+Do not hand-edit:
 
-Regenerate them with:
+- `src/content/docs/{project}/`
+- `public/{project}/assets/`
+- `public/extras/`
+- `dist/`
+
+Regenerate project content and public extras with:
 
 ```bash
 bun run prepare:all
 ```
 
-`dist/_headers` is also generated during `bun run build` and is required to
-serve `/hsblabs/oss/extras/SKILL` as `text/markdown; charset=utf-8`.
+Repository-owned public assets must remain below `docs/www/assets/**` in each
+source repository.
 
 ## Schema changes
 
-`schema_version` uses `YYYY-MM-DD`. A breaking or contract-significant profile
-change must add a new supported version in `src/schema/document.ts`, update the
-public documentation, tests, and relevant ADRs, and keep older versions only
-when compatibility is intentionally supported.
+`schema_version` uses `YYYY-MM-DD`. Contract-significant changes must add a new
+supported version in `src/schema/document.ts` and update the documentation,
+tests, and relevant ADRs.
 
-Repository-owned presentation metadata should prefer the `hsblabs` namespace.
-The ingestion layer owns translation into Starlight-specific frontmatter.
+The public JSON Schema and the schema embedded in `extras/SKILL` must both be
+generated from `contentCollectionSchema`. Do not maintain a separate schema
+copy.
 
-The JSON Schema endpoint and the schema embedded in `extras/SKILL` must always
-be generated from the same `contentCollectionSchema`. Never maintain a second
-hand-authored schema copy.
+## Development
 
-## Tooling and validation
-
-Use Bun as the package manager and script runner. Do not introduce another
-package manager.
+Use Bun as the package manager and script runner.
 
 ```bash
-bun run test
+bun run check
 bun run build
-bun run self-check
 ```
 
-A successful process exit alone is insufficient: `bun run build` must leave
-`llms.txt`, `extras/document-schema.json`, `extras/SKILL`, and
-`extras/validate-docs.sh` under
-`dist/hsblabs/oss/`, plus `dist/_headers`, as verified by
-`scripts/verify-build.ts`.
+The build must pass `scripts/verify-build.ts` and produce the documented files
+below `dist/hsblabs/oss/` plus `dist/_headers`.
 
-## External changes
-
-Local implementation and validation are allowed. Do not push, create PRs,
-deploy, or mutate source OSS repositories unless explicitly requested.
+Keep changes scoped to this repository. Do not deploy or modify source OSS
+repositories as part of a documentation-site change.
