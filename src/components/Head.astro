@@ -1,0 +1,31 @@
+---
+import DefaultHead from '@astrojs/starlight/components/Head.astro';
+
+const { entry, lang, siteTitle } = Astro.locals.starlightRoute;
+const siteUrl = Astro.site ?? new URL(Astro.url.origin);
+const pageUrl = new URL(Astro.url.pathname, siteUrl).href;
+const structuredData =
+  entry.id === '404'
+    ? undefined
+    : {
+        '@context': 'https://schema.org',
+        '@type': entry.data.template === 'splash' ? 'WebPage' : 'TechArticle',
+        name: entry.data.title,
+        headline: entry.data.title,
+        description: entry.data.description,
+        url: pageUrl,
+        inLanguage: lang,
+        isPartOf: {
+          '@type': 'WebSite',
+          name: siteTitle,
+          url: siteUrl.href,
+        },
+      };
+---
+
+<DefaultHead />
+{
+  structuredData && (
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  )
+}

@@ -19,6 +19,24 @@ export default defineConfig({
       favicon: '/favicon.png',
       description:
         'Documentation for open-source projects published by hsblabs.',
+      head: [
+        {
+          tag: 'script',
+          attrs: {
+            async: true,
+            src: 'https://www.googletagmanager.com/gtag/js?id=G-WZ3RT34EZZ',
+          },
+        },
+        {
+          tag: 'script',
+          content: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-WZ3RT34EZZ');
+          `,
+        },
+      ],
       defaultLocale: DEFAULT_SITE_LOCALE,
       locales: SITE_LOCALES,
       social: [
@@ -30,6 +48,7 @@ export default defineConfig({
       ],
       customCss: ['./src/styles/custom.css'],
       components: {
+        Head: './src/components/Head.astro',
         PageTitle: './src/components/PageTitle.astro',
         Sidebar: './src/components/ProjectSidebar.astro',
         SiteTitle: './src/components/SiteTitle.astro',
