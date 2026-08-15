@@ -24,6 +24,9 @@ const projectGroup = project
 const projectHref = project
   ? `${route.siteTitleHref}${project.slug}/`
   : undefined;
+const llmsHref = project
+  ? `${import.meta.env.BASE_URL}_llms-txt/${project.slug}.txt`
+  : undefined;
 ---
 
 {
@@ -33,11 +36,12 @@ const projectHref = project
         {project.label ?? project.slug}
       </a>
       <a
-        class="repository-link"
+        class="resource-link"
         href={`https://github.com/${project.repository}`}
       >
         GitHub repository
       </a>
+      <a class="resource-link" href={llmsHref}>llms.txt</a>
       <hr />
       <SidebarPersister>
         <SidebarSublist sublist={projectGroup.entries} />
@@ -66,7 +70,7 @@ const projectHref = project
     color: var(--sl-color-accent-high);
   }
 
-  .repository-link {
+  .resource-link {
     display: block;
     color: var(--sl-color-gray-3);
     font-size: var(--sl-text-xs);
@@ -74,8 +78,8 @@ const projectHref = project
     text-decoration: none;
   }
 
-  .repository-link:hover,
-  .repository-link:focus {
+  .resource-link:hover,
+  .resource-link:focus {
     color: var(--sl-color-white);
     text-decoration: underline;
   }
