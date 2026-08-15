@@ -15,6 +15,7 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'hsblabs OSS',
+      favicon: '/favicon.png',
       description:
         'Documentation for open-source projects published by hsblabs.',
       defaultLocale: 'root',
