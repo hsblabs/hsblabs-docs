@@ -1,0 +1,68 @@
+---
+import DefaultSidebar from '@astrojs/starlight/components/Sidebar.astro';
+import SidebarPersister from '@astrojs/starlight/components/SidebarPersister.astro';
+import SidebarSublist from '@astrojs/starlight/components/SidebarSublist.astro';
+import MobileMenuFooter from 'virtual:starlight/components/MobileMenuFooter';
+
+import { loadEnabledProjects } from '../lib/projects';
+
+const route = Astro.locals.starlightRoute;
+const project = loadEnabledProjects().find(
+  ({ slug }) => Astro.url.pathname.startsWith(`${route.siteTitleHref}${slug}/`),
+);
+const projectGroup = project
+  ? route.sidebar.find(
+      (entry) =>
+        entry.type === 'group' &&
+        entry.entries.some(
+          (child) =>
+            'autogenerate' in child &&
+            child.autogenerate.directory === project.slug,
+        ),
+    )
+  : undefined;
+const projectHref = project
+  ? `${route.siteTitleHref}${project.slug}/`
+  : undefined;
+---
+
+{
+  project && projectGroup && projectHref ? (
+    <>
+      <a class="project-name" href={projectHref}>
+        {project.label ?? project.slug}
+      </a>
+      <hr />
+      <SidebarPersister>
+        <SidebarSublist sublist={projectGroup.entries} />
+      </SidebarPersister>
+      <div class="md:sl-hidden">
+        <MobileMenuFooter />
+      </div>
+    </>
+  ) : (
+    <DefaultSidebar />
+  )
+}
+
+<style>
+  .project-name {
+    display: block;
+    color: var(--sl-color-white);
+    font-size: var(--sl-text-base);
+    font-weight: 600;
+    padding: 0.2em 0.5rem;
+    text-decoration: none;
+  }
+
+  .project-name:hover,
+  .project-name:focus {
+    color: var(--sl-color-accent-high);
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid var(--sl-color-hairline-light);
+    margin: 0.5rem 0 0.75rem;
+  }
+</style>
