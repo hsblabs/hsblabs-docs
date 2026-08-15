@@ -1,0 +1,32 @@
+---
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+import { getCollection } from 'astro:content';
+
+import { loadEnabledProjects } from '../lib/projects';
+
+const entries = await getCollection('docs');
+const projects = loadEnabledProjects().map((project) => {
+  const overview = entries.find(({ id }) => id === project.slug);
+  if (!overview) {
+    throw new Error(`Missing overview page for ${project.repository}`);
+  }
+
+  return {
+    description: overview.data.description,
+    href: `./${project.slug}/`,
+    title: overview.data.title,
+  };
+});
+---
+
+<CardGrid>
+  {
+    projects.map((project) => (
+      <LinkCard
+        title={project.title}
+        href={project.href}
+        description={project.description}
+      />
+    ))
+  }
+</CardGrid>
