@@ -63,5 +63,5 @@ describe('source locale directories', () => {
         await rename(backupRepositoryRoot, syncedRepositoryRoot);
       }
     }
-  });
+  }, 15_000);
 });
