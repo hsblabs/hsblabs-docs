@@ -33,6 +33,7 @@ Use this skill when creating or updating public hsblabs OSS documentation.
 - Link to source documents with relative file paths such as \`./output.md\`. Do not use deployment-specific site-root links or add a site prefix such as \`/hsblabs/oss/<project>\`.
 - English is the default language and keeps the unprefixed site routes.
 - Japanese uses the \`/ja/\` locale path; untranslated pages fall back to English.
+- This section is the complete locale-support contract: English and Japanese are already supported. Do not clone or inspect the centralized documentation repository, its configuration, or generated output to verify locale support.
 - Put translations under the matching configured locale directory, keeping the same relative document path. For example, \`docs/www/ja/guide.md\` is published at \`/ja/<project>/guide/\`.
 
 ## Page structure for SEO and AIO
@@ -43,7 +44,7 @@ Use this skill when creating or updating public hsblabs OSS documentation.
 - Let frontmatter \`title\` provide the page's only H1. Use a logical H2/H3 hierarchy, short self-contained sections, lists, tables, and code blocks so people and answer engines can extract facts without reconstructing context.
 - Cite changing or evidence-based claims with the available \`resource\`, \`sources\`, \`verified\`, and \`stale_after\` fields when applicable. Do not keyword-stuff, duplicate pages, or add hidden SEO text.
 
-## Adding languages later
+## Adding other languages later
 
 - Keep the \`root\` locale as English and preserve its existing unprefixed URLs. Japanese is the \`ja\` locale at \`/ja/\`.
 - Treat adding a locale as a publishing-protocol change. Define its stable locale key, language tag, label, URL prefix, source directory, translations, and fallback behavior in the publishing configuration before adding \`docs/www/<locale>/\` documents.

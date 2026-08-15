@@ -37,6 +37,9 @@ describe('generated extras', () => {
     expect(skill).toContain('docs/www/<repository-name>/');
     expect(skill).toContain('./output.md');
     expect(skill).toContain('English is the default language');
+    expect(skill).toContain(
+      'Do not clone or inspect the centralized documentation repository',
+    );
     expect(skill).toContain('/ja/');
     expect(skill).toContain('docs/www/ja/');
     expect(skill).toContain('one primary search or answer intent');
