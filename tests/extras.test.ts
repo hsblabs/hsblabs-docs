@@ -42,10 +42,15 @@ describe('generated extras', () => {
     expect(skill).toContain('one primary search or answer intent');
     expect(skill).toContain("frontmatter `title` provide the page's only H1");
     expect(skill).toContain(
-      'publishing-protocol change, not an OSS source-repository change',
+      'Treat adding a locale as a publishing-protocol change',
     );
     expect(skill).toContain('publishing configuration');
-    expect(skill).toContain('Do not create `docs/www/<locale>/`');
+    expect(skill).toContain(
+      'Put translations under the matching configured locale directory',
+    );
+    expect(skill).not.toContain(
+      'translated-source ingestion is not part of the current repository contract',
+    );
     expect(skill).toContain('extras/validate-docs.sh');
     expect(skill).toContain('/hsblabs/oss/extras/validate-docs.sh');
     expect(skill).not.toContain('validate-docs.py');

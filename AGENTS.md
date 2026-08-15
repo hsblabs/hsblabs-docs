@@ -11,6 +11,7 @@ OSS projects. Each source repository owns its documents under
 - `projects/projects.json` defines publishable repositories.
 - `src/schema/document.ts` defines the versioned document profile and the
   Starlight Content Collection schema.
+- `src/config/locales.ts` defines the supported site and source-document locales.
 - `src/schema/json-schema.ts` owns JSON Schema generation.
 - `src/extras/skill.ts` owns the generated authoring `SKILL` document.
 - `docs/adr/` records architectural decisions.
@@ -19,7 +20,7 @@ OSS projects. Each source repository owns its documents under
 
 Do not hand-edit:
 
-- `src/content/docs/{project}/`
+- `src/content/docs/{project}/` and `src/content/docs/{locale}/{project}/`
 - `public/{project}/assets/`
 - `public/extras/`
 - `dist/`

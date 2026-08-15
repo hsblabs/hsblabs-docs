@@ -5,7 +5,7 @@ Centralized documentation site for OSS projects published by `hsblabs`.
 - Astro + Starlight
 - Cloudflare Workers Static Assets
 - Bun package manager and script runner for repository tooling
-- repository-owned source documents under `docs/www/**/*.md`
+- repository-owned English and configured-locale documents under `docs/www/**/*.md`
 - public local assets restricted to `docs/www/assets/**`
 - OKF v0.2-derived frontmatter profile
 - versioned Zod Content Collection schema
@@ -23,6 +23,7 @@ The site is built below:
 https://hsb.horse/hsblabs/oss/
 https://hsb.horse/hsblabs/oss/{project}/
 https://hsb.horse/hsblabs/oss/{project}/guides/...
+https://hsb.horse/hsblabs/oss/ja/{project}/guides/...
 ```
 
 Machine-readable extras are served at:
@@ -48,6 +49,10 @@ some-project/
         ├── getting-started.md
         ├── guides/
         │   └── advanced.md
+        ├── ja/
+        │   ├── index.md
+        │   └── guides/
+        │       └── advanced.md
         └── assets/
             └── architecture.svg
 ```
@@ -56,6 +61,8 @@ Files below `docs/www` must follow these rules:
 
 - public pages are Markdown files (`**/*.md`)
 - public non-Markdown files must be below `docs/www/assets/**`
+- English documents live at the root; configured locale directories such as
+  `docs/www/ja/**` are translated documents with the same relative paths
 - symlinks are rejected
 - local non-Markdown references from Markdown must resolve below
   `docs/www/assets/**`
@@ -74,6 +81,9 @@ docs/www/getting-started.md
 
 docs/www/reference/api.md
 → /hsblabs/oss/scrape-kdl/reference/api/
+
+docs/www/ja/reference/api.md
+→ /hsblabs/oss/ja/scrape-kdl/reference/api/
 ```
 
 ## Document schema
@@ -237,6 +247,7 @@ docs/www validation
         │
         ▼
 src/content/docs/{project}
+src/content/docs/{locale}/{project}
 public/{project}/assets
         │
         ├──────────────► public/extras/document-schema.json
