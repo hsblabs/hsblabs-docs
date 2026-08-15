@@ -1,6 +1,12 @@
 {
   "projects": [
     {
+      "slug": "universal-speedtest-cli",
+      "repository": "hsblabs/universal-speedtest-cli",
+      "ref": "main",
+      "enabled": true
+    },
+    {
       "slug": "scrape-kdl",
       "repository": "hsblabs/scrape-kdl",
       "ref": "main",
