@@ -30,6 +30,7 @@ Machine-readable extras are served at:
 ```text
 https://hsb.horse/hsblabs/oss/extras/document-schema.json
 https://hsb.horse/hsblabs/oss/extras/SKILL
+https://hsb.horse/hsblabs/oss/extras/validate-docs.sh
 ```
 
 `/hsblabs/oss/extras/SKILL` is served as `text/markdown; charset=utf-8` using
@@ -160,6 +161,7 @@ z.toJSONSchema(contentCollectionSchema, {
 ```text
 public/extras/document-schema.json
 public/extras/SKILL
+public/extras/validate-docs.sh
 ```
 
 Because Astro builds into `dist/hsblabs/oss`, Cloudflare serves them as:
@@ -167,6 +169,7 @@ Because Astro builds into `dist/hsblabs/oss`, Cloudflare serves them as:
 ```text
 /hsblabs/oss/extras/document-schema.json
 /hsblabs/oss/extras/SKILL
+/hsblabs/oss/extras/validate-docs.sh
 ```
 
 The `SKILL` document is generated from the same in-memory JSON Schema and embeds
@@ -238,8 +241,9 @@ public/{project}/assets
         │
         ├──────────────► public/extras/document-schema.json
         │                 z.toJSONSchema()
-        └──────────────► public/extras/SKILL
+        ├──────────────► public/extras/SKILL
                           embeds the same JSON Schema
+        └──────────────► public/extras/validate-docs.sh
         │
         ▼
 Astro + Starlight
@@ -251,6 +255,7 @@ dist/hsblabs/oss/**
         │
         ├─ extras/document-schema.json
         ├─ extras/SKILL
+        ├─ extras/validate-docs.sh
         └─ llms.txt
         │
         ▼
@@ -335,7 +340,8 @@ dist/
         ├── llms.txt
         ├── extras/
         │   ├── document-schema.json
-        │   └── SKILL
+        │   ├── SKILL
+        │   └── validate-docs.sh
         └── {project}/
 ```
 

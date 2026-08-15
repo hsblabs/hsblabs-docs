@@ -17,6 +17,17 @@ export default defineConfig({
       title: 'hsblabs OSS',
       description:
         'Documentation for open-source projects published by hsblabs.',
+      defaultLocale: 'root',
+      locales: {
+        root: {
+          label: 'English',
+          lang: 'en',
+        },
+        ja: {
+          label: '日本語',
+          lang: 'ja',
+        },
+      },
       social: [
         {
           icon: 'github',

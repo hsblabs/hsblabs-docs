@@ -27,7 +27,7 @@ describe('document source schema', () => {
     ).toThrow();
   });
 
-  it('rejects conflicting direct Starlight and hsblabs sidebar metadata', () => {
+  it('rejects conflicting direct and hsblabs sidebar metadata', () => {
     const parsed = documentSourceSchema.parse({
       schema_version: DOCUMENT_SCHEMA_VERSION,
       type: 'Guide',
@@ -37,7 +37,7 @@ describe('document source schema', () => {
     });
 
     expect(validateDocumentSemantics(parsed)).toContain(
-      'do not define both "hsblabs.sidebar" and Starlight "sidebar"; prefer "hsblabs.sidebar" in repository-owned docs',
+      'do not define both "hsblabs.sidebar" and "sidebar"; prefer "hsblabs.sidebar" in repository-owned docs',
     );
   });
 

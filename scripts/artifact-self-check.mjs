@@ -13,6 +13,7 @@ const required = [
   'src/schema/document.ts',
   'src/schema/json-schema.ts',
   'src/extras/skill.ts',
+  'src/extras/validate-docs.sh',
   'scripts/sync-projects.ts',
   'scripts/prepare-content.ts',
   'scripts/generate-extras.ts',
@@ -53,6 +54,9 @@ if (!endpointsSource.includes('/hsblabs/oss/extras/document-schema.json')) {
 if (!endpointsSource.includes('/hsblabs/oss/extras/SKILL')) {
   throw new Error('SKILL endpoint is incorrect');
 }
+if (!endpointsSource.includes('/hsblabs/oss/extras/validate-docs.sh')) {
+  throw new Error('validation script endpoint is incorrect');
+}
 
 const jsonSchemaSource = await readFile(
   resolve(root, 'src/schema/json-schema.ts'),
@@ -71,6 +75,17 @@ const skillSource = await readFile(
 );
 if (!skillSource.includes('```json')) {
   throw new Error('SKILL does not contain a JSON code block template');
+}
+
+const validationScriptSource = await readFile(
+  resolve(root, 'src/extras/validate-docs.sh'),
+  'utf8',
+);
+if (
+  !validationScriptSource.startsWith('#!/usr/bin/env bash') ||
+  !validationScriptSource.includes('uv run')
+) {
+  throw new Error('validate-docs.sh is incomplete');
 }
 
 const syncScript = await readFile(

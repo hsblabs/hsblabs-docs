@@ -149,7 +149,7 @@ export function validateDocumentSemantics(
     document.sidebar !== undefined
   ) {
     issues.push(
-      'do not define both "hsblabs.sidebar" and Starlight "sidebar"; prefer "hsblabs.sidebar" in repository-owned docs',
+      'do not define both "hsblabs.sidebar" and "sidebar"; prefer "hsblabs.sidebar" in repository-owned docs',
     );
   }
 

@@ -4,8 +4,10 @@ import { loadEnabledProjects } from '../lib/projects';
 
 const projects = loadEnabledProjects();
 const pathname = Astro.url.pathname;
+const locale = Astro.locals.starlightRoute.locale;
+const projectBasePath = `${DOCS_BASE_PATH}/${locale ? `${locale}/` : ''}`;
 const currentProject = projects.find((project) =>
-  pathname.startsWith(`${DOCS_BASE_PATH}/${project.slug}/`),
+  pathname.startsWith(`${projectBasePath}${project.slug}/`),
 );
 ---
 
@@ -16,13 +18,13 @@ const currentProject = projects.find((project) =>
         aria-label="Switch OSS project"
         data-project-switcher
       >
-        <option value={`${DOCS_BASE_PATH}/`} selected={!currentProject}>
+        <option value={projectBasePath} selected={!currentProject}>
           All projects
         </option>
         {
           projects.map((project) => (
             <option
-              value={`${DOCS_BASE_PATH}/${project.slug}/`}
+              value={`${projectBasePath}${project.slug}/`}
               selected={currentProject?.slug === project.slug}
             >
               {project.label ?? project.slug}

@@ -15,8 +15,7 @@
 ## Generated files
 
 Do not hand-edit generated project content below `src/content/docs/{project}/`,
-project assets below `public/{project}/assets/`,
-`public/extras/document-schema.json`, or `public/extras/SKILL`.
+project assets below `public/{project}/assets/`, or files below `public/extras/`.
 
 Regenerate them with:
 
@@ -53,7 +52,8 @@ bun run self-check
 ```
 
 A successful process exit alone is insufficient: `bun run build` must leave
-`llms.txt`, `extras/document-schema.json`, and `extras/SKILL` under
+`llms.txt`, `extras/document-schema.json`, `extras/SKILL`, and
+`extras/validate-docs.sh` under
 `dist/hsblabs/oss/`, plus `dist/_headers`, as verified by
 `scripts/verify-build.ts`.
 

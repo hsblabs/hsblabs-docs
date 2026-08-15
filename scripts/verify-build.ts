@@ -12,6 +12,7 @@ const requiredFiles = [
   'llms.txt',
   'extras/document-schema.json',
   'extras/SKILL',
+  'extras/validate-docs.sh',
 ] as const;
 
 for (const file of requiredFiles) {
@@ -42,6 +43,14 @@ const embeddedSchema = extractEmbeddedDocumentSchema(skill);
 
 if (JSON.stringify(embeddedSchema) !== JSON.stringify(schema)) {
   throw new Error('extras/SKILL does not embed the published document schema');
+}
+
+const validationScript = await readFile(
+  resolve(buildRoot, 'extras/validate-docs.sh'),
+  'utf8',
+);
+if (!validationScript.startsWith('#!/usr/bin/env bash')) {
+  throw new Error('extras/validate-docs.sh is invalid');
 }
 
 const headersPath = resolve(root, 'dist/_headers');

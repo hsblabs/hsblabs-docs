@@ -24,8 +24,7 @@ export function createDocumentJsonSchema(): Record<string, unknown> {
     ...generated,
     $id: `https://hsb.horse${DOCUMENT_SCHEMA_ENDPOINT}`,
     title: 'hsblabs OSS document frontmatter',
-    description:
-      'Starlight content collection frontmatter extended with the OKF-derived hsblabs OSS Docs profile.',
+    description: 'The OKF-derived hsblabs OSS document frontmatter profile.',
     'x-hsblabs-schema-version': DOCUMENT_SCHEMA_VERSION,
     'x-okf-version': '0.2',
   };

@@ -4,6 +4,7 @@ dist/
 .context/repos/
 public/extras/document-schema.json
 public/extras/SKILL
+public/extras/validate-docs.sh
 public/*/assets/
 src/content/docs/*/
 !src/content/docs/index.md

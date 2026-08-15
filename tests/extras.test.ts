@@ -15,7 +15,7 @@ describe('generated extras', () => {
     expect(schema['x-hsblabs-schema-version']).toBe('2026-08-15');
   });
 
-  it('converts the Starlight schema factory into a JSON Schema object', () => {
+  it('converts the document schema into a JSON Schema object', () => {
     const schema = createDocumentJsonSchema();
 
     expect(schema).toMatchObject({ type: 'object' });
@@ -27,5 +27,32 @@ describe('generated extras', () => {
     const skill = createAuthoringSkill(schema);
 
     expect(extractEmbeddedDocumentSchema(skill)).toEqual(schema);
+  });
+
+  it('keeps authoring and validation in the source repository', () => {
+    const skill = createAuthoringSkill(createDocumentJsonSchema());
+
+    expect(skill).toContain('Work in the current repository');
+    expect(skill).toContain('docs/www');
+    expect(skill).toContain('docs/www/<repository-name>/');
+    expect(skill).toContain('./output.md');
+    expect(skill).toContain('English is the default language');
+    expect(skill).toContain('/ja/');
+    expect(skill).toContain('docs/www/ja/');
+    expect(skill).toContain('one primary search or answer intent');
+    expect(skill).toContain("frontmatter `title` provide the page's only H1");
+    expect(skill).toContain(
+      'publishing-protocol change, not an OSS source-repository change',
+    );
+    expect(skill).toContain('publishing configuration');
+    expect(skill).toContain('Do not create `docs/www/<locale>/`');
+    expect(skill).toContain('extras/validate-docs.sh');
+    expect(skill).toContain('/hsblabs/oss/extras/validate-docs.sh');
+    expect(skill).not.toContain('validate-docs.py');
+    expect(skill).not.toContain('hsblabs-docs');
+    expect(skill).not.toContain('Starlight');
+    expect(skill).not.toContain('Zod');
+    expect(skill).not.toContain('Content Collection');
+    expect(skill).not.toContain('built-in language switcher');
   });
 });
