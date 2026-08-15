@@ -32,6 +32,12 @@ const projectHref = project
       <a class="project-name" href={projectHref}>
         {project.label ?? project.slug}
       </a>
+      <a
+        class="repository-link"
+        href={`https://github.com/${project.repository}`}
+      >
+        GitHub repository
+      </a>
       <hr />
       <SidebarPersister>
         <SidebarSublist sublist={projectGroup.entries} />
@@ -58,6 +64,20 @@ const projectHref = project
   .project-name:hover,
   .project-name:focus {
     color: var(--sl-color-accent-high);
+  }
+
+  .repository-link {
+    display: block;
+    color: var(--sl-color-gray-3);
+    font-size: var(--sl-text-xs);
+    padding: 0 0.5rem;
+    text-decoration: none;
+  }
+
+  .repository-link:hover,
+  .repository-link:focus {
+    color: var(--sl-color-white);
+    text-decoration: underline;
   }
 
   hr {
