@@ -28,12 +28,12 @@ Use this skill when creating or updating public hsblabs OSS documentation.
 
 ## Project layout and language
 
-- Treat \`docs/www\` as the complete source root for this repository. Do not add \`docs/www/<repository-name>/\` or \`docs/www/<project-slug>/\`; topic directories such as \`docs/www/guides/\` are allowed.
-- The published site adds the project's namespace. \`docs/www/index.md\` is the project home.
+- Treat \`docs/www\` as the complete source root for this repository. Do not add \`docs/www/<repository-name>/\` or \`docs/www/<project-slug>/\`; topic directories such as \`docs/www/guides/\` and configured locale directories such as \`docs/www/ja/\` are allowed.
+- The published site adds the project's namespace. \`docs/www/index.md\` is the English project home; \`docs/www/ja/index.md\` is its Japanese translation.
 - Link to source documents with relative file paths such as \`./output.md\`. Do not use deployment-specific site-root links or add a site prefix such as \`/hsblabs/oss/<project>\`.
 - English is the default language and keeps the unprefixed site routes.
 - Japanese uses the \`/ja/\` locale path; untranslated pages fall back to English.
-- Do not create translations or locale directories such as \`docs/www/ja/\` unless explicitly requested; translated-source ingestion is not part of the current repository contract.
+- Put translations under the matching configured locale directory, keeping the same relative document path. For example, \`docs/www/ja/guide.md\` is published at \`/ja/<project>/guide/\`.
 
 ## Page structure for SEO and AIO
 
@@ -46,7 +46,7 @@ Use this skill when creating or updating public hsblabs OSS documentation.
 ## Adding languages later
 
 - Keep the \`root\` locale as English and preserve its existing unprefixed URLs. Japanese is the \`ja\` locale at \`/ja/\`.
-- Treat adding a locale as a publishing-protocol change, not an OSS source-repository change. Define a stable locale key, language tag, label, URL prefix, translations, and fallback behavior in the publishing configuration. Do not create \`docs/www/<locale>/\` in source repositories; locale routing is a website concern until translated-source ingestion is explicitly added.
+- Treat adding a locale as a publishing-protocol change. Define its stable locale key, language tag, label, URL prefix, source directory, translations, and fallback behavior in the publishing configuration before adding \`docs/www/<locale>/\` documents.
 - Keep source-document links relative and language-neutral. Locale navigation is owned by the published site; do not hard-code a special case for Japanese or another language in every document.
 - Do not change the English URL contract as part of adding a language unless an explicit migration is approved.
 

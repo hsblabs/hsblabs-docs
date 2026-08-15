@@ -2,6 +2,7 @@ import { relative, resolve, sep } from 'node:path';
 import { rm } from 'node:fs/promises';
 
 import { normalizeDocumentFrontmatter } from '../src/lib/normalize-document';
+import { SOURCE_LOCALES, splitSourceLocalePath } from '../src/config/locales';
 import { loadEnabledProjects } from '../src/lib/projects';
 import {
   documentSourceSchema,
@@ -39,6 +40,12 @@ for (const project of loadEnabledProjects()) {
   }
 
   await rm(outputContentRoot, { recursive: true, force: true });
+  for (const locale of SOURCE_LOCALES) {
+    await rm(resolve(contentRoot, locale, project.slug), {
+      recursive: true,
+      force: true,
+    });
+  }
   await rm(outputAssetsRoot, { recursive: true, force: true });
 
   const files = await walkFiles(docsRoot);
@@ -129,8 +136,12 @@ for (const project of loadEnabledProjects()) {
       parsed.body,
     );
     const rewritten = rewriteMarkdownLinks(normalizedSource, project.slug);
+    const { locale, path } = splitSourceLocalePath(normalizedRelativePath);
     await writeText(
-      resolve(outputContentRoot, normalizedRelativePath),
+      resolve(
+        locale ? contentRoot : outputContentRoot,
+        ...(locale ? [locale, project.slug, path] : [path]),
+      ),
       rewritten,
     );
   }

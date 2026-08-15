@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import starlightLlmsTxt from 'starlight-llms-txt';
 
 import { DOCS_BASE_PATH } from './src/config/site';
+import { DEFAULT_SITE_LOCALE, SITE_LOCALES } from './src/config/locales';
 import { loadEnabledProjects } from './src/lib/projects';
 
 const projects = loadEnabledProjects();
@@ -18,17 +19,8 @@ export default defineConfig({
       favicon: '/favicon.png',
       description:
         'Documentation for open-source projects published by hsblabs.',
-      defaultLocale: 'root',
-      locales: {
-        root: {
-          label: 'English',
-          lang: 'en',
-        },
-        ja: {
-          label: '日本語',
-          lang: 'ja',
-        },
-      },
+      defaultLocale: DEFAULT_SITE_LOCALE,
+      locales: SITE_LOCALES,
       social: [
         {
           icon: 'github',
