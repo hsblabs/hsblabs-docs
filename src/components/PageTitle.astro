@@ -1,0 +1,74 @@
+---
+import DefaultPageTitle from '@astrojs/starlight/components/PageTitle.astro';
+
+import { loadEnabledProjects } from '../lib/projects';
+
+const route = Astro.locals.starlightRoute;
+const project = loadEnabledProjects().find(({ slug }) =>
+  Astro.url.pathname.startsWith(`${route.siteTitleHref}${slug}/`),
+);
+const site = Astro.site ?? Astro.url;
+const pageUrl = new URL(Astro.url.pathname, site).href;
+const llmsUrl = new URL(
+  project
+    ? `${import.meta.env.BASE_URL}_llms-txt/${project.slug}.txt`
+    : `${import.meta.env.BASE_URL}llms.txt`,
+  site,
+).href;
+const prompt = `次のOSSドキュメントと補足資料を読んでください。
+ページ: ${pageUrl}
+補足資料: ${llmsUrl}
+
+このページの内容を私の目的に合わせて具体化したいです。まず、達成したいことと利用環境について質問してから提案してください。`;
+const flatPrompt = `次のOSSドキュメントと補足資料を読み、利用方法と注意点を具体的に説明してください。ページ: ${pageUrl} 補足資料: ${llmsUrl}`;
+const links = [
+  {
+    label: 'ChatGPTに聞く',
+    href: `https://chatgpt.com/?hints=search&q=${encodeURIComponent(prompt)}`,
+  },
+  {
+    label: 'Geminiに聞く',
+    href: `https://www.google.com/search?udm=50&q=${encodeURIComponent(flatPrompt)}`,
+  },
+  {
+    label: 'Claudeに聞く',
+    href: `https://claude.ai/new?q=${encodeURIComponent(prompt)}`,
+  },
+  {
+    label: 'Perplexityに聞く',
+    href: `https://www.perplexity.ai/search?q=${encodeURIComponent(prompt)}`,
+  },
+] as const;
+---
+
+<DefaultPageTitle><slot /></DefaultPageTitle>
+
+<nav class="ask-ai-links" aria-label="AIに聞く">
+  {
+    links.map(({ label, href }) => (
+      <a href={href} target="_blank" rel="noopener noreferrer">
+        {label}
+      </a>
+    ))
+  }
+</nav>
+
+<style>
+  .ask-ai-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    margin-top: 0.75rem;
+    font-size: var(--sl-text-sm);
+  }
+
+  .ask-ai-links a {
+    color: var(--sl-color-text-accent);
+    text-decoration: none;
+  }
+
+  .ask-ai-links a:hover,
+  .ask-ai-links a:focus {
+    text-decoration: underline;
+  }
+</style>
