@@ -10,7 +10,7 @@
       "slug": "scrape-kdl",
       "repository": "hsblabs/scrape-kdl",
       "ref": "main",
-      "enabled": false
+      "enabled": true
     },
     {
       "slug": "http-command",
