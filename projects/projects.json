@@ -1,0 +1,16 @@
+{
+  "projects": [
+    {
+      "slug": "scrape-kdl",
+      "repository": "hsblabs/scrape-kdl",
+      "ref": "main",
+      "enabled": false
+    },
+    {
+      "slug": "http-command",
+      "repository": "hsblabs/http-command",
+      "ref": "main",
+      "enabled": false
+    }
+  ]
+}

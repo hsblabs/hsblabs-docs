@@ -1,0 +1,10 @@
+---
+import DefaultSiteTitle from '@astrojs/starlight/components/SiteTitle.astro';
+
+import ProjectSwitcher from './ProjectSwitcher.astro';
+---
+
+<div class="hsblabs-site-title">
+  <DefaultSiteTitle><slot /></DefaultSiteTitle>
+  <ProjectSwitcher />
+</div>

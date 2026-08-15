@@ -1,0 +1,12 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "hsblabs-docs",
+  "compatibility_date": "2026-08-15",
+  "route": "hsb.horse/hsblabs/oss/*",
+  "assets": {
+    "directory": "./dist/",
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash",
+  },
+  "preview_urls": false,
+}

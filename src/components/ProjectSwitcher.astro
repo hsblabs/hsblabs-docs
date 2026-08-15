@@ -1,0 +1,44 @@
+---
+import { DOCS_BASE_PATH } from '../config/site';
+import { loadEnabledProjects } from '../lib/projects';
+
+const projects = loadEnabledProjects();
+const pathname = Astro.url.pathname;
+const currentProject = projects.find((project) =>
+  pathname.startsWith(`${DOCS_BASE_PATH}/${project.slug}/`),
+);
+---
+
+{
+  projects.length > 0 && (
+    <label class="hsblabs-project-switcher">
+      <select
+        aria-label="Switch OSS project"
+        data-project-switcher
+      >
+        <option value={`${DOCS_BASE_PATH}/`} selected={!currentProject}>
+          All projects
+        </option>
+        {
+          projects.map((project) => (
+            <option
+              value={`${DOCS_BASE_PATH}/${project.slug}/`}
+              selected={currentProject?.slug === project.slug}
+            >
+              {project.label ?? project.slug}
+            </option>
+          ))
+        }
+      </select>
+    </label>
+  )
+}
+
+<script>
+  const select = document.querySelector('[data-project-switcher]');
+  if (select instanceof HTMLSelectElement) {
+    select.addEventListener('change', () => {
+      window.location.assign(select.value);
+    });
+  }
+</script>
